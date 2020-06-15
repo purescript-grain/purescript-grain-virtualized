@@ -5,9 +5,8 @@ import Prelude
 import Data.Array ((..))
 import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype, over)
-import Data.Tuple (Tuple(..))
 import Effect (Effect)
-import Grain (class Grain, VNode, fromConstructor, grain, mountUI, useLocalState)
+import Grain (class LocalGrain, LProxy(..), VNode, fromConstructor, mountUI, useUpdater, useValue)
 import Grain.Markup as H
 import Grain.Virtualized (virtualList)
 import Web.DOM.Element (toNode)
@@ -20,7 +19,7 @@ newtype State = State Int
 
 derive instance newtypeState :: Newtype State _
 
-instance grainState :: Grain State where
+instance localGrainState :: LocalGrain State where
   initialState _ = pure $ State 999
   typeRefOf _ = fromConstructor State
 
@@ -34,7 +33,8 @@ main = do
 
 view :: VNode
 view = H.component do
-  Tuple (State state) updateState <- useLocalState (grain :: _ State)
+  State state <- useValue (LProxy :: _ State)
+  updateState <- useUpdater (LProxy :: _ State)
   let addMany = updateState $ over State (_ + 1000)
   pure $ H.div # H.kids
     [ H.h1 # H.kids [ H.text "Virtual list demo" ]

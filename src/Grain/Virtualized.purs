@@ -8,8 +8,7 @@ import Prelude
 import Data.Array (concat, snoc)
 import Data.Foldable (foldl)
 import Data.Maybe (Maybe(..))
-import Data.Tuple (Tuple(..))
-import Grain (class Grain, VNode, fromConstructor, grain, useLocalState)
+import Grain (class LocalGrain, LProxy(..), VNode, fromConstructor, useUpdater, useValue)
 import Grain.Markup as H
 import Web.DOM.Element as E
 import Web.Event.Event (target)
@@ -36,14 +35,15 @@ type Params =
 
 newtype ScrollTop = ScrollTop Number
 
-instance grainScrollTop :: Grain ScrollTop where
+instance localGrainScrollTop :: LocalGrain ScrollTop where
   initialState _ = pure $ ScrollTop 0.0
   typeRefOf _ = fromConstructor ScrollTop
 
 -- | Render a virtual list.
 virtualList :: forall a. Config a -> VNode
 virtualList config = H.component do
-  Tuple (ScrollTop scrollTop) updateScrollTop <- useLocalState (grain :: _ ScrollTop)
+  ScrollTop scrollTop <- useValue (LProxy :: _ ScrollTop)
+  updateScrollTop <- useUpdater (LProxy :: _ ScrollTop)
 
   let style = "overflow:auto;height:" <> show config.height <> "px;"
 
