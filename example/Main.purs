@@ -6,7 +6,7 @@ import Data.Array ((..))
 import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype, over)
 import Effect (Effect)
-import Grain (class LocalGrain, LProxy(..), VNode, fromConstructor, mountUI, useUpdater, useValue)
+import Grain (class LocalGrain, LProxy(..), VNode, fromConstructor, mount, useUpdater, useValue)
 import Grain.Markup as H
 import Grain.Virtualized (virtualList)
 import Web.DOM.Element (toNode)
@@ -29,7 +29,7 @@ main = do
   case maybeEl of
     Nothing -> pure unit
     Just el ->
-      void $ mountUI view $ toNode el
+      mount view $ toNode el
 
 view :: VNode
 view = H.component do
