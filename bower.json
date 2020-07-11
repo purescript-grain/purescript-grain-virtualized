@@ -14,6 +14,6 @@
         "output"
     ],
     "dependencies": {
-        "purescript-grain": "https://github.com/purescript-grain/purescript-grain.git#v0.4.0"
+        "purescript-grain": "https://github.com/purescript-grain/purescript-grain.git#v0.4.1"
     }
 }
