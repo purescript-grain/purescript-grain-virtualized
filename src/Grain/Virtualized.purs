@@ -43,7 +43,7 @@ instance localGrainScrollTop :: LocalGrain ScrollTop where
 virtualList :: forall a. Props a -> VNode
 virtualList props = H.component do
   ScrollTop scrollTop <- useValue (LProxy :: _ ScrollTop)
-  update <- useUpdater
+  updateScrollTop <- useUpdater (LProxy :: _ ScrollTop)
 
   let style = "overflow:auto;height:" <> show props.height <> "px;"
 
@@ -54,7 +54,7 @@ virtualList props = H.component do
           Nothing -> pure unit
           Just element -> do
             scrollTop' <- E.scrollTop element
-            update (LProxy :: _ ScrollTop) $ const $ ScrollTop scrollTop'
+            updateScrollTop $ const $ ScrollTop scrollTop'
 
   pure $ H.div
     # H.style style

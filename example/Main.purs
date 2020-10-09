@@ -34,8 +34,8 @@ main = do
 view :: VNode
 view = H.component do
   State state <- useValue (LProxy :: _ State)
-  update <- useUpdater
-  let addMany = update (LProxy :: _ State) $ over State (_ + 1000)
+  updateState <- useUpdater (LProxy :: _ State)
+  let addMany = updateState $ over State (_ + 1000)
   pure $ H.div # H.kids
     [ H.h1 # H.kids [ H.text "Virtual list demo" ]
     , H.button
