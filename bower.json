@@ -14,6 +14,12 @@
         "output"
     ],
     "dependencies": {
-        "purescript-grain": "https://github.com/purescript-grain/purescript-grain.git#v2.0.0"
+        "purescript-arrays": "^v7.1.0",
+        "purescript-foldable-traversable": "^v6.0.0",
+        "purescript-grain": "https://github.com/purescript-grain/purescript-grain.git#v3.0.0",
+        "purescript-maybe": "^v6.0.0",
+        "purescript-prelude": "^v6.0.1",
+        "purescript-web-dom": "^v6.0.0",
+        "purescript-web-events": "^v4.0.0"
     }
 }
